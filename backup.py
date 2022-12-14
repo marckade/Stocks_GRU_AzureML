@@ -18,23 +18,18 @@ def main():
     mlflow.set_tracking_uri(workspace.get_mlflow_tracking_uri())
     print(workspace.get_mlflow_tracking_uri())
     mlflow.set_experiment(experiment_name)
-    mlflow.autolog()
-    # mlflow.tensorflow.autolog()
+    # mlflow.autolog()
+    mlflow.tensorflow.autolog()
 
     print(mlflow.active_run)
     X_train, y_train, X_valid, y_valid, X_test = DataScripts.Transformation.transformData()
-    
+
     GRUModel, predicted_stock_price = TrainScripts.TrainGRU.trainModel(X_train, y_train, X_valid, y_valid, X_test)
 
     print(type(GRUModel))
     print(GRUModel)
     # mlflow.run('TrainScripts/SubmitTrain.py', experiment_name = 'Adv_AI_LocalTrain')
     with mlflow.start_run() as run:
-
-        X_train, y_train, X_valid, y_valid, X_test = DataScripts.Transformation.transformData()
-
-        GRUModel, predicted_stock_price = TrainScripts.TrainGRU.trainModel(X_train, y_train, X_valid, y_valid, X_test)
-        
         # runfunc = ConnectionFunctions.createRun("/TrainScripts","SubmitTrain.py", env, experiment)
         mlflow.log_param("Hello Param", "World")
         mlflow.log_param("Predicted Prices", 3)
@@ -46,43 +41,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-# ------------------------------------------------------------------------------------------------------------------------------------------------
-
-# import azureml.core
-# from azureml.core import Workspace, Datastore
-# import mlflow
-# import os
-# import sys
-
-# # Internal Functions
-# import ConnectionFunctions
-# import DataScripts.Transformation
-# import TrainScripts.TrainGRU
-
-# lib_path = os.path.abspath("TrainScripts")
-# sys.path.append(lib_path)
-
-# import TrainScripts.train
-# def main():
-
-#     workspace = ConnectionFunctions.connectAzureWorkspace()
-#     print(azureml.core.VERSION)
-#     # Create Experiment
-#     experiment_name = 'Adv_AI_LocalTrain'
-
-#     mlflow.set_tracking_uri(workspace.get_mlflow_tracking_uri())
-#     mlflow.set_experiment(experiment_name)
-
-#     run = TrainScripts.train.driver()
-#     print("Finished with Run")
-
-# if __name__ == "__main__":
-#     main()

@@ -14,7 +14,7 @@ def transformData():
     # looking at the stock history for AABA from 2006-2018
     # AABA is Altaba Inc. (formerly known as Yahoo! Inc.), and is an independent,
     # non-diversified, closed-end management investment company registered under the 1940 Act.
-    df = pd.read_csv('/content/AABA_2006-01-01_to_2018-01-01.csv', index_col='Date', parse_dates=['Date'])
+    df = pd.read_csv('Data/AABA_2006-01-01_to_2018-01-01.csv', index_col='Date', parse_dates=['Date'])
     training_set = df[:'2016'].iloc[:,1:2].values
     test_set = df['2017':].iloc[:,1:2].values
 
@@ -50,4 +50,6 @@ def transformData():
     X_test = np.array(X_test)
     X_test = np.expand_dims(X_test, axis=-1)
 
+    print(X_test[0])
+    print(X_test[1])
     return X_train, y_train, X_valid, y_valid, X_test

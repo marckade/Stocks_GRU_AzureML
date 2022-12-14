@@ -1,0 +1,8 @@
+name: stocks_gru_azureml
+
+docker_env:
+    image: stocks_gru_azureml
+
+entry_points:
+    main:
+        command: "python main.py"

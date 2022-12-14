@@ -22,10 +22,12 @@ def trainModel(X_train, y_train, X_valid, y_valid, X_test):
     ])
 
 
-    model.compile(loss='mean_squared_error', optimizer='rmsprop')
-    history = model.fit(X_train, y_train, epochs=100, 
-                        validation_data = (X_valid, y_valid), 
-                        callbacks=[keras.callbacks.EarlyStopping(patience=5)])
+    GRUModel = model.compile(loss='mean_squared_error', optimizer='rmsprop')
+    model.fit(X_train, y_train, epochs=1, 
+                    validation_data = (X_valid, y_valid), 
+                    callbacks=[keras.callbacks.EarlyStopping(patience=5)])
 
     predicted_stock_price = model.predict(X_test)
     # predicted_stock_price = sc.inverse_transform(predicted_stock_price)
+
+    return model, predicted_stock_price
